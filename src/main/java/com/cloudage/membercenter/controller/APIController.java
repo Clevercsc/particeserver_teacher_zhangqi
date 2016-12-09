@@ -1,5 +1,6 @@
 package com.cloudage.membercenter.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,9 @@ public class APIController {
 		return "HELLO WORLD";
 	}
 	
+	@Autowired
 	IUserService iUserService;
+	
 	@RequestMapping(value= "/register" ,method =RequestMethod.POST)
 	public User register(
 		@RequestParam String account,

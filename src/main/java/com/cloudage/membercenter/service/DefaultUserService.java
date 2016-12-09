@@ -16,7 +16,9 @@ import com.cloudage.membercenter.repository.IUserRepository;
 @Transactional
 public class DefaultUserService implements IUserService {
 
+	@Autowired
 	IUserRepository userRepo;
+	
 	@Override
 	public User save(User user) {
 		// TODO Auto-generated method stub
