@@ -33,7 +33,7 @@ public class APIController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public User register(@RequestParam String account, @RequestParam String passwordHash, @RequestParam String email,
-			@RequestParam String name, MultipartFile avater, HttpServletRequest requet) {
+			@RequestParam String name, MultipartFile avatar, HttpServletRequest requet) {
 
 		User user = new User();
 		user.setAccount(account);
@@ -41,10 +41,10 @@ public class APIController {
 		user.setName(name);
 		user.setPasswordHash(passwordHash);
 
-		if (avater != null) {
+		if (avatar != null) {
 			String realPath = requet.getSession().getServletContext().getRealPath("WEB-INF/upload");
 			try {
-				FileUtils.copyInputStreamToFile(avater.getInputStream(), new File(realPath, account + ".png"));
+				FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realPath, account + ".png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
