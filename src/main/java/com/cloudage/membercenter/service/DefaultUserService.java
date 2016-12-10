@@ -3,6 +3,7 @@ package com.cloudage.membercenter.service;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,13 @@ public class DefaultUserService implements IUserService {
 		 		
 				return userRepo.save(user);
 	}
+
+	@Override
+	public User findByAccount(String account) {
+	return userRepo.findByAccount(account);
+	}
+
+
 
 
 

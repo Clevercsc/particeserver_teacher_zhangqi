@@ -9,4 +9,5 @@ public interface IUserService {
 	User getCurrentUser();
 	boolean changePassword(String newPasswordHash);
 	void logout();
+	User findByAccount(String account);
 }
