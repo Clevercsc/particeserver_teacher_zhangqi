@@ -3,9 +3,10 @@ package com.cloudage.membercenter.util;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-
+@MappedSuperclass//此标注为自动
 public class DateRecord extends BaseEntity {
 	Date createDate;
 	Date editDate;
