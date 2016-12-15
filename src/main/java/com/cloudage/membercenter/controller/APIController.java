@@ -23,6 +23,7 @@ import com.cloudage.membercenter.entity.Comment;
 import com.cloudage.membercenter.entity.User;
 import com.cloudage.membercenter.service.IArticleService;
 import com.cloudage.membercenter.service.ICommentService;
+import com.cloudage.membercenter.service.ILikesService;
 import com.cloudage.membercenter.service.IUserService;
 
 @RestController
@@ -37,6 +38,9 @@ public class APIController {
 
 	@Autowired
 	ICommentService commentService;
+	
+	@Autowired
+	ILikesService likesService;
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public @ResponseBody String hello() {
@@ -127,6 +131,11 @@ public class APIController {
 	public Page<Comment> getCommentsOfArticle(@PathVariable int article_id, @PathVariable int page) {
 		return commentService.findCommentsOfArticle(article_id, page);
 	}
+	//获取comment的数目
+	@RequestMapping("/article/{article_id}/comments/count")
+	 	public int getCommentsCountOfArticle(@PathVariable int article_id){
+	 		return commentService.getCommentCountOfArticle(article_id);
+	 	}
 
 	@RequestMapping("/article/{article_id}/comments")
 	public Page<Comment> getCommentsOfArticle(@PathVariable int article_id) {
@@ -143,4 +152,36 @@ public class APIController {
 		comment.setText(text);
 		return commentService.save(comment);
 	}
+	
+	
+	
+	
+	//获取点赞
+	@RequestMapping("/article/{article_id}/likes")
+  	public int countLikes(@PathVariable int article_id){
+  		return likesService.countLikes(article_id);
+  	}
+ 	
+	@RequestMapping("/article/{article_id}/isliked")
+ 	public boolean checkLiked(@PathVariable int article_id,HttpServletRequest request){
+ 		User me = getCurrentUser(request);
+ 		return likesService.checkLiked(me.getId(), article_id);
+ 	}
+  
+  	@RequestMapping(value="/article/{article_id}/likes",method = RequestMethod.POST)
+  	public int changeLikes(
+ 			@PathVariable int article_id,
+ 			@RequestParam boolean likes,
+ 			HttpServletRequest request
+ 			){
+ 		User me = getCurrentUser(request);
+ 		Article article = articleService.findOne(article_id);
+ 
+ 		if(likes)
+ 			likesService.addLike(me, article);
+ 		else
+ 			likesService.removeLike(me, article);
+ 		
+ 		return likesService.countLikes(article_id);
+ 	}
 }
