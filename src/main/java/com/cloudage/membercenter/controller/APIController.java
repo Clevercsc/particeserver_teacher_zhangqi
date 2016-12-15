@@ -157,31 +157,32 @@ public class APIController {
 	
 	
 	//获取点赞
+
 	@RequestMapping("/article/{article_id}/likes")
-  	public int countLikes(@PathVariable int article_id){
-  		return likesService.countLikes(article_id);
-  	}
- 	
+	public int countLikes(@PathVariable int article_id){
+		return likesService.countLikes(article_id);
+	}
+	
 	@RequestMapping("/article/{article_id}/isliked")
- 	public boolean checkLiked(@PathVariable int article_id,HttpServletRequest request){
- 		User me = getCurrentUser(request);
- 		return likesService.checkLiked(me.getId(), article_id);
- 	}
-  
-  	@RequestMapping(value="/article/{article_id}/likes",method = RequestMethod.POST)
-  	public int changeLikes(
- 			@PathVariable int article_id,
- 			@RequestParam boolean likes,
- 			HttpServletRequest request
- 			){
- 		User me = getCurrentUser(request);
- 		Article article = articleService.findOne(article_id);
- 
- 		if(likes)
- 			likesService.addLike(me, article);
- 		else
- 			likesService.removeLike(me, article);
- 		
- 		return likesService.countLikes(article_id);
- 	}
+	public boolean checkLiked(@PathVariable int article_id,HttpServletRequest request){
+		User me = getCurrentUser(request);
+		return likesService.checkLiked(me.getId(), article_id);
+	}
+
+	@RequestMapping(value="/article/{article_id}/likes",method = RequestMethod.POST)
+	public int changeLikes(
+			@PathVariable int article_id,
+			@RequestParam boolean likes,
+			HttpServletRequest request
+			){
+		User me = getCurrentUser(request);
+		Article article = articleService.findOne(article_id);
+
+		if(likes)
+			likesService.addLike(me, article);
+		else
+			likesService.removeLike(me, article);
+		
+		return likesService.countLikes(article_id);
+	}
 }
