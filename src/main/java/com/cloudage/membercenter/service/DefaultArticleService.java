@@ -49,4 +49,11 @@ public class DefaultArticleService implements IArticleService{
 	 		return articleRepo.findOne(id);
 	 	}
 
+	@Override
+	public Page<Article> findArticleByKeyWord(String keyword,int page) {
+		Sort sort =new Sort(Direction.DESC,"createDate");
+		PageRequest pageRequest=new PageRequest(page, 20, sort);
+		return articleRepo.findAllByKeyWord(keyword, pageRequest);
+	}
+
 }
