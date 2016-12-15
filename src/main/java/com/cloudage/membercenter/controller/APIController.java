@@ -185,4 +185,15 @@ public class APIController {
 		
 		return likesService.countLikes(article_id);
 	}
+	
+	
+	
+	//搜索文章
+	@RequestMapping(value = "/search/{keyword}" )
+	public Page<Article> findArticleByKeyWord(@RequestParam(defaultValue="0") int page,
+			@PathVariable String keyword) {
+		
+		return articleService.findArticleByKeyWord(keyword,page);
+	}
+	
 }
