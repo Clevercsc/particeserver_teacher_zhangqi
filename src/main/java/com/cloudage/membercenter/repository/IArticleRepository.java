@@ -20,4 +20,7 @@ public interface IArticleRepository extends PagingAndSortingRepository<Article, 
 	
 	@Query("from Article article where article.text like %?1%")
 	Page<Article> findAllByKeyWord(String keyword,Pageable page);
+	
+	@Query("from Article article where article.author.id = ?1 ")
+	Page<Article> findAllByAuthorId(Integer id,Pageable page);
 }

@@ -56,4 +56,11 @@ public class DefaultArticleService implements IArticleService{
 		return articleRepo.findAllByKeyWord(keyword, pageRequest);
 	}
 
+	@Override
+	public Page<Article> findArticleByAuthorId(Integer id,int page) {
+		Sort sort =new Sort(Direction.DESC,"createDate");
+		PageRequest pageRequest=new PageRequest(page, 20, sort);
+		return articleRepo.findAllByAuthorId(id, pageRequest);
+	}
+
 }

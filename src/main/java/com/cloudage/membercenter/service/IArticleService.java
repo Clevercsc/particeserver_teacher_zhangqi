@@ -14,4 +14,5 @@ public interface IArticleService {
 	Page<Article> getFeeds(int page);
 	Article findOne(int id);
 	Page<Article> findArticleByKeyWord(String keyword,int page);
+	Page<Article> findArticleByAuthorId(Integer id,int page);
 }

@@ -188,12 +188,42 @@ public class APIController {
 	
 	
 	
-	//搜索文章
+	//按照文章内容关键字搜索文章
 	@RequestMapping(value = "/search/{keyword}" )
 	public Page<Article> findArticleByKeyWord(@RequestParam(defaultValue="0") int page,
 			@PathVariable String keyword) {
 		
 		return articleService.findArticleByKeyWord(keyword,page);
 	}
+	
+	//按照作者的id搜索文章
+	@RequestMapping(value = "/search/myArticle")
+	public Page<Article> findArticlByAuthorId(@RequestParam(defaultValue = "0") int page,
+			HttpServletRequest request){
+		User currentUser  =getCurrentUser(request);
+		int authorId = currentUser.getId();
+		
+		return articleService.findArticleByAuthorId(authorId,page);
+	}
+	
+	
+	//找出我发表的评论
+	@RequestMapping(value = "/search/myComment")
+	public Page<Comment> findMyComments(@RequestParam(defaultValue = "0") int page ,
+			HttpServletRequest request
+			){
+		User currentUser  =getCurrentUser(request);
+		int authorId = currentUser.getId();
+		return commentService.findMyCommentsByAuthorId(authorId, page);
+	}
+	@RequestMapping(value = "/search/myReceiveComment")
+	public Page<Comment> findReceiveComments(@RequestParam(defaultValue = "0") int page ,
+			HttpServletRequest request
+			){
+		User currentUser  =getCurrentUser(request);
+		int authorId = currentUser.getId();
+		return commentService.findReceiveCommentsByAuthorId(authorId, page);
+	}
+	
 	
 }
